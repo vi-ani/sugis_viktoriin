@@ -24,7 +24,9 @@ function renderCards() {
         <span class="card__inner">
           <span class="card__face" aria-hidden="true" style="--cover: url('${card.cover}')"></span>
           <span class="card__back card__back--poiss" role="group" aria-label="${card.title}">
-            <img class="card__back-bgimg" src="assets/img/bg_poiss.jpg" alt="" aria-hidden="true" />
+            <img class="card__back-bgimg-clear" src="assets/img/bg_poiss.jpg" alt="" aria-hidden="true" />
+            <img class="card__back-bgimg-blur" src="assets/img/bg_poiss.jpg" alt="" aria-hidden="true" />
+            <img class="card__back-boyimg" src="assets/img/poiss.png" alt="Poiss" aria-hidden="true" />
             <span class="card__back-content">
               <div class="card__title">${card.title}</div>
               <div class="card__descr">${card.descr}</div>
