@@ -11,25 +11,50 @@ const CARDS = [
 // Kaartide renderdamine
 function renderCards() {
   const grid = document.getElementById('cardsGrid');
-  grid.innerHTML = CARDS.map(card => `
-  <button
-    class="card"
-    type="button"
-    aria-label="${card.title}: pööra"
-    aria-expanded="false"
-    data-card-id="${card.id}"
-  >
-    <span class="card__inner">
-    <span class="card__face" aria-hidden="true" style="--cover: url('${card.cover}')"></span>
-    <span class="card__back" role="group" aria-label="${card.title}"${card.id === 1 ? " data-bg=\"bg_poiss\"" : ''}>
-      <span>
-      <div class="card__title">${card.title}</div>
-      <div class="card__descr">${card.descr}</div>
-      </span>
-    </span>
-    </span>
-  </button>
-  `).join('');
+  grid.innerHTML = CARDS.map(card => {
+    if (card.id === 1) {
+      return `
+      <button
+        class="card"
+        type="button"
+        aria-label="${card.title}: pööra"
+        aria-expanded="false"
+        data-card-id="${card.id}"
+      >
+        <span class="card__inner">
+          <span class="card__face" aria-hidden="true" style="--cover: url('${card.cover}')"></span>
+          <span class="card__back card__back--poiss" role="group" aria-label="${card.title}">
+            <img class="card__back-bgimg" src="assets/img/bg_poiss.jpg" alt="" aria-hidden="true" />
+            <span class="card__back-content">
+              <div class="card__title">${card.title}</div>
+              <div class="card__descr">${card.descr}</div>
+            </span>
+          </span>
+        </span>
+      </button>
+      `;
+    } else {
+      return `
+      <button
+        class="card"
+        type="button"
+        aria-label="${card.title}: pööra"
+        aria-expanded="false"
+        data-card-id="${card.id}"
+      >
+        <span class="card__inner">
+          <span class="card__face" aria-hidden="true" style="--cover: url('${card.cover}')"></span>
+          <span class="card__back" role="group" aria-label="${card.title}">
+            <span>
+              <div class="card__title">${card.title}</div>
+              <div class="card__descr">${card.descr}</div>
+            </span>
+          </span>
+        </span>
+      </button>
+      `;
+    }
+  }).join('');
 }
 // Helper to insert placeholder in grid
 function insertPlaceholder(cardBtn) {
