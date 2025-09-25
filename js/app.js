@@ -27,6 +27,10 @@ function renderCards() {
             <img class="card__back-bgimg-clear" src="assets/img/bg_poiss.jpg" alt="" aria-hidden="true" />
             <img class="card__back-bgimg-blur" src="assets/img/bg_poiss.jpg" alt="" aria-hidden="true" />
             <img class="card__back-boyimg" src="assets/img/poiss.png" alt="Poiss" aria-hidden="true" />
+            <span class="card__back-clothes-wrap card__back-clothes-wrap--jope">
+              <img class="card__back-clothes card__back-clothes--jope" src="assets/img/clothes/jope.png" alt="Jope" aria-hidden="true" />
+              <span class="card__back-clothes-label">JOPE</span>
+            </span>
             <span class="card__back-content">
               <div class="card__title">${card.title}</div>
               <div class="card__descr">${card.descr}</div>
