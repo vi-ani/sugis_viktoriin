@@ -1,6 +1,6 @@
 // Kaartide seaded (6 tk). Muuda kaante pilte ja tekste vastavalt.
 const CARDS = [
-  { id: 1, cover: '../assets/img/poiss.png', title: 'Laps', descr: 'Küsimuse mall' },
+  { id: 1, cover: '../assets/img/poiss.png', title: 'Mida poiss paneb selga sügisel?', descr: '' },
   { id: 2, cover: '../assets/img/siil.png', title: 'Siil', descr: 'Küsimuse mall' },
   { id: 3, cover: '../assets/img/leht.png', title: 'Sügis', descr: 'Küsimuse mall' },
   { id: 4, cover: '../assets/img/orav.png', title: 'Orav', descr: 'Küsimuse mall' },
@@ -21,7 +21,7 @@ function renderCards() {
   >
     <span class="card__inner">
     <span class="card__face" aria-hidden="true" style="--cover: url('${card.cover}')"></span>
-    <span class="card__back" role="group" aria-label="${card.title}">
+    <span class="card__back" role="group" aria-label="${card.title}"${card.id === 1 ? " data-bg=\"bg_poiss\"" : ''}>
       <span>
       <div class="card__title">${card.title}</div>
       <div class="card__descr">${card.descr}</div>

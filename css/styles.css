@@ -1,3 +1,29 @@
+/* Special style for card 1 back title */
+.card__back[data-bg=bg_poiss] .card__title {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 2.2em;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7), 0 1px 0 #333;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  z-index: 2;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.card__back[data-bg=bg_poiss] .card__descr {
+  display: none;
+}
+/* Custom background for card back with id:1 */
+.card__back[data-bg=bg_poiss] {
+  background-image: url('../assets/img/bg_poiss.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 :root{
   --page-bg: #f6f7fb;
   --card-bg: #ffffff;
