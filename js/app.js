@@ -12,25 +12,39 @@ const CARDS = [
 function renderCards() {
   const grid = document.getElementById('cardsGrid');
   grid.innerHTML = CARDS.map(card => `
-    <button
-        class="card"
-        type="button"
-        aria-label="${card.title}: pööra"
-        aria-expanded="false"
-        data-card-id="${card.id}"
-    >
-        <span class="card__inner">
-        <span class="card__face" aria-hidden="true" style="--cover: url('${card.cover}')"></span>
-        <span class="card__back" role="group" aria-label="${card.title}">
-            <span>
-            <div class="card__title">${card.title}</div>
-            <div class="card__descr">${card.descr}</div>
-            </span>
-        </span>
-        </span>
-    </button>
-    `).join('');
-
+  <button
+    class="card"
+    type="button"
+    aria-label="${card.title}: pööra"
+    aria-expanded="false"
+    data-card-id="${card.id}"
+  >
+    <span class="card__inner">
+    <span class="card__face" aria-hidden="true" style="--cover: url('${card.cover}')"></span>
+    <span class="card__back" role="group" aria-label="${card.title}">
+      <span>
+      <div class="card__title">${card.title}</div>
+      <div class="card__descr">${card.descr}</div>
+      </span>
+    </span>
+    </span>
+  </button>
+  `).join('');
+}
+// Helper to insert placeholder in grid
+function insertPlaceholder(cardBtn) {
+  // Remove any existing placeholder
+  const grid = document.getElementById('cardsGrid');
+  const old = grid.querySelector('.card-placeholder');
+  if (old) old.remove();
+  // Insert placeholder at the same index as the card
+  const cards = Array.from(grid.children);
+  const idx = cards.indexOf(cardBtn);
+  if (idx !== -1) {
+    const placeholder = document.createElement('div');
+    placeholder.className = 'card-placeholder';
+    grid.insertBefore(placeholder, cards[idx]);
+  }
 }
 
 // Pööramise loogika (hiir + klaviatuur)
@@ -40,6 +54,13 @@ function setupInteractions() {
   grid.addEventListener('click', (e) => {
     const btn = e.target.closest('.card');
     if (!btn) return;
+    // Remove flip from any other card
+    document.querySelectorAll('.card.is-flipped').forEach(el => {
+      if (el !== btn) {
+        el.classList.remove('is-flipped');
+        el.setAttribute('aria-expanded', 'false');
+      }
+    });
     toggleFlip(btn);
   });
 
@@ -48,6 +69,13 @@ function setupInteractions() {
     if (!btn) return;
     if (e.code === 'Enter' || e.code === 'Space') {
       e.preventDefault();
+      // Remove flip from any other card
+      document.querySelectorAll('.card.is-flipped').forEach(el => {
+        if (el !== btn) {
+          el.classList.remove('is-flipped');
+          el.setAttribute('aria-expanded', 'false');
+        }
+      });
       toggleFlip(btn);
     }
   });
@@ -63,9 +91,36 @@ function setupInteractions() {
   }
 }
 
+
+
 function toggleFlip(btn) {
-  const isFlipped = btn.classList.toggle('is-flipped');
-  btn.setAttribute('aria-expanded', isFlipped ? 'true' : 'false');
+  // If already open, close and reset
+  if (btn.classList.contains('flipping')) {
+    btn.classList.remove('flipping', 'expand');
+    btn.setAttribute('aria-expanded', 'false');
+    // Remove placeholder
+    insertPlaceholder(null);
+    return;
+  }
+
+  // Remove flip from any other card
+  document.querySelectorAll('.card.flipping').forEach(el => {
+    el.classList.remove('flipping', 'expand');
+    el.setAttribute('aria-expanded', 'false');
+  });
+  insertPlaceholder(null);
+
+  btn.classList.add('flipping');
+  btn.setAttribute('aria-expanded', 'true');
+
+  // Phase 1: rotate to 90deg in place
+  setTimeout(() => {
+    // Phase 2: expand and finish flip
+    if (btn.classList.contains('flipping')) {
+      btn.classList.add('expand');
+      insertPlaceholder(btn);
+    }
+  }, 150); // faster: match the new CSS transition duration for 90deg
 }
 
 // Käivitamine

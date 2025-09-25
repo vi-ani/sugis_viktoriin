@@ -67,6 +67,78 @@ body{
   display: flex;
 }
 
+/* Flipped card expands to cover the page */
+
+/* Card expands and centers only when showing the back */
+
+/* Phase 1: flipping to 90deg in place */
+.card.flipping {
+  z-index: 1000;
+}
+.card.flipping .card__inner {
+  transition: transform 300ms cubic-bezier(.2,.6,.2,1);
+  transform: rotateY(90deg);
+}
+
+/* Phase 2: expand and finish flip */
+/* Faster expand transition */
+/* Expanded card is absolutely positioned over grid, others stay in place */
+.card.flipping.expand {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  aspect-ratio: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.12);
+  transition: all 0.18s cubic-bezier(.2,.6,.2,1);
+  z-index: 1000;
+}
+/* Placeholder to keep grid cell occupied */
+.card-placeholder {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  height: 100%;
+  visibility: hidden;
+}
+.card.flipping.expand .card__inner {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  box-sizing: border-box;
+  transition: transform 180ms cubic-bezier(.2,.6,.2,1);
+  transform: rotateY(180deg);
+}
+.card.flipping.expand .card__face,
+.card.flipping.expand .card__back {
+  border-radius: 24px;
+  font-size: 1.3em;
+  padding: 32px;
+}
+
+@media (max-width: 700px) {
+  .card.flipping.expand .card__inner {
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    max-height: none;
+    padding: 0;
+  }
+  .card.flipping.expand .card__face,
+  .card.flipping.expand .card__back {
+    padding: 10px;
+    font-size: 1em;
+  }
+}
+
 
 .card__inner{
   position: absolute;
